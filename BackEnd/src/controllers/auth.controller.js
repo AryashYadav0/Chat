@@ -44,6 +44,9 @@ export const signup = async (req, res, next) => {
                 email: newUser.email,
                 profilePic: newUser.profilePic,
             });
+
+
+            // to-do : send a welcome email to user 
         } else {
             res.status(400).json({message: "invalid user data"})
         }
