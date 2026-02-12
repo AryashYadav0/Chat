@@ -4,7 +4,7 @@ import { generateToken } from "../lib/utils.js";
 import User from "../models/User.js";
 import bcrypt from "bcryptjs";
 
-
+// signup 
 export const signup = async (req, res, next) => {
     const { fullName, email, password } = req.body;
 
@@ -20,10 +20,10 @@ export const signup = async (req, res, next) => {
         if (!emailRegex.test(email)) {
             return res.status(400).json({ message: "Invalid email format" })
         }
-         
+
         //user
-        const user = await User.findOne({email});
-        if(user) {
+        const user = await User.findOne({ email });
+        if (user) {
             return res.status(400).json({ message: "Email is already exists" })
         }
 
@@ -32,8 +32,8 @@ export const signup = async (req, res, next) => {
         const hashedPassword = await bcrypt.hash(password, salt)
 
         const newUser = new User({
-            fullName, 
-            email, 
+            fullName,
+            email,
             password: hashedPassword
         })
 
@@ -45,8 +45,8 @@ export const signup = async (req, res, next) => {
             const saveUser = await newUser.save();
             generateToken(saveUser._id, res)
 
-            res.status(201).json({ 
-                _id:newUser._id, 
+            res.status(201).json({
+                _id: newUser._id,
                 fullName: newUser.fullName,
                 email: newUser.email,
                 profilePic: newUser.profilePic,
@@ -57,17 +57,46 @@ export const signup = async (req, res, next) => {
             try {
                 await sendWelcomeEmail(saveUser.email, saveUser.fullName, ENV.CLIENT_URL);
                 console.log("Email sent successfully to ", saveUser.email);
-                
+
             } catch (error) {
                 console.error("Error sending welcome:", error);
             }
         } else {
-            res.status(400).json({message: "invalid user data"})
+            res.status(400).json({ message: "invalid user data" })
         }
 
 
     } catch (error) {
         console.log("Error in signup controller", error);
-        res.status(500).json({message:"Internal server error"})
+        res.status(500).json({ message: "Internal server error" })
     }
 };
+
+// login 
+export const login = async (req, res, next) => {
+    const { email, password } = req.body
+    try {
+        const user = await User.findOne({ email })
+        if (!user) return res.status(400).json({ message: "Invalid credentials" })
+        // never tell the client which one is incorrect: password or email
+        const isPasswordCorrect = await bcrypt.compare(password, user.password)
+        if (!isPasswordCorrect) return res.status(400).json({ message: "Invalid credentials" })
+
+        generateToken(user._id, res)
+        res.status(200).json({
+            _id: user._id,
+            fullName: user.fullName,
+            email: user.email,
+            profilePic: user.profilePic
+        })
+    } catch (error) {
+        console.log("Error in login controller:", error);
+        res.status(500).json({message:"Internal server error"})
+
+    }
+}
+
+// logout
+export const logout = (_, res, next) => {
+    res.cookie("jwt")
+}
