@@ -3,6 +3,7 @@ import { ENV } from "../lib/env.js";
 import { generateToken } from "../lib/utils.js";
 import User from "../models/User.js";
 import bcrypt from "bcryptjs";
+import cloudinary from "../lib/cloudinary.js"
 
 // signup 
 export const signup = async (req, res, next) => {
@@ -76,19 +77,19 @@ export const signup = async (req, res, next) => {
 export const login = async (req, res, next) => {
     const { email, password } = req.body;
 
-    if(!email || !password){
-        return res.status(400).json({message:" Email and Password are required "});
+    if (!email || !password) {
+        return res.status(400).json({ message: " Email and Password are required " });
     }
     try {
         const user = await User.findOne({ email })
         // console.log("Email", email);
-        
+
         if (!user) return res.status(400).json({ message: "Invalid credentials" })
         // never tell the client which one is incorrect: password or email
         const isPasswordCorrect = await bcrypt.compare(password, user.password)
         if (!isPasswordCorrect) return res.status(400).json({ message: "Invalid credentials" })
         // console.log("isPasswordCorrect",isPasswordCorrect); 
-        
+
 
         generateToken(user._id, res)
         res.status(200).json({
@@ -99,13 +100,30 @@ export const login = async (req, res, next) => {
         })
     } catch (error) {
         console.log("Error in login controller:", error);
-        res.status(500).json({message:"Internal server error"})
+        res.status(500).json({ message: "Internal server error" })
 
     }
 }
 
 // logout
 export const logout = (_, res, next) => {
-    res.cookie("jwt","", {maxAge:0});
-    res.status(200).json({message: "logged out successfully"})
+    res.cookie("jwt", "", { maxAge: 0 });
+    res.status(200).json({ message: "logged out successfully" })
+}
+
+export const updateProfile = async (req, res, next) => {
+    try {
+        const { profilePic } = req.body;
+        if (!profilePic) return res.status(400).json({ message: "Profile pic is required" })
+
+        const userId = req.user._id;
+        const uploadResponse = await cloudinary.uploader.upload(profilePic);
+
+        const updatedUser=await User.findByIdAndUpdate(userId, { profilePic: uploadResponse.secure_url}, {new:true})
+
+        res.status(200).json(updateUser);
+    } catch (error) {
+        console.log("Error in update profile: ", error);
+        res.status(500).json({ message: "Internal server error" })
+    }
 }
