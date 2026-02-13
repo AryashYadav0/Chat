@@ -77,10 +77,14 @@ export const login = async (req, res, next) => {
     const { email, password } = req.body
     try {
         const user = await User.findOne({ email })
+        // console.log("Email", email);
+        
         if (!user) return res.status(400).json({ message: "Invalid credentials" })
         // never tell the client which one is incorrect: password or email
         const isPasswordCorrect = await bcrypt.compare(password, user.password)
         if (!isPasswordCorrect) return res.status(400).json({ message: "Invalid credentials" })
+        // console.log("isPasswordCorrect",isPasswordCorrect); 
+        
 
         generateToken(user._id, res)
         res.status(200).json({
@@ -98,5 +102,6 @@ export const login = async (req, res, next) => {
 
 // logout
 export const logout = (_, res, next) => {
-    res.cookie("jwt")
+    res.cookie("jwt","", {maxAge:0});
+    res.status(200).json({message: "logged out successfully"})
 }
