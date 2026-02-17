@@ -1,9 +1,9 @@
 import React from 'react'
 
-function Chatpage() {
+function ChatPage() {
   return (
-    <div>Chatpage</div>
+    <div>ChatPage</div>
   )
 }
 
-export default Chatpage
+export default ChatPage
