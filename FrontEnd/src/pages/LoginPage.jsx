@@ -87,7 +87,7 @@ function LoginPage() {
 
             {/* IMAGE COLUMN - RIGHT SIDE */}
             <div className="hidden md:w-1/2 md:flex items-center justify-center p-6 bg-gradient-to-bl from-slate-800/20 to-transparent">
-              <img src="/signup.png" alt="Login Image" className="w-full h-auto object-contain" />
+              <img src="/login.png" alt="Login Image" className="w-full h-auto object-contain" />
             </div>
           </div>
         </BorderAnimatedContainer>
