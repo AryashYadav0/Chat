@@ -28,7 +28,7 @@ function ContactsList() {
                 <img src={contact.profilePic || "/avatar.png"} alt={contact.fullName} />
               </div>
             </div>
-            <h4 className="text-slate-200 font-medium truncate">contact.fullName</h4>
+            <h4 className="text-slate-200 font-medium truncate">{contact.fullName}</h4>
           </div>
         </div>
       ))}
