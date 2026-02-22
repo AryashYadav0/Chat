@@ -11,8 +11,10 @@ import { useChatStore } from '../store/useChatStore';
 
 function ChatPage() {
   // const { logout } = useAuthStore();
-  const { activeTab, selectUser } = useChatStore();
+  const { activeTab, selectedUser } = useChatStore();
 
+  // console.log(selectedUser);
+  
 
   return (
     <div className="relative w-full max-w-6x h-[800px]">
@@ -29,7 +31,7 @@ function ChatPage() {
 
         {/* right  */}
         <div className="flex-1 flex flex-col bg-slate-900/50 backdrop-blur-sm">
-          {selectUser ? <ChatContainer /> : < NoConversationSelectionPlaceHolder />}
+          {selectedUser ? <ChatContainer /> : < NoConversationSelectionPlaceHolder />}
         </div>
       </BorderAnimatedContainer>
     </div>
