@@ -18,7 +18,7 @@ export const getAllContacts = async (req, res) => {
 
 export const getMessagesByUserId = async (req, res) => {
     try {
-        const myId = req.body._id;
+        const myId = req.user._id;
         const { id: userToChatId } = req.params;
         // me and you
         // i send you the msg
@@ -30,7 +30,9 @@ export const getMessagesByUserId = async (req, res) => {
             ]
         });
 
-        res.status(200).json({ messages })
+        res.status(200).json(messages)
+        // console.log(messages);
+
 
 
     } catch (error) {
@@ -39,13 +41,33 @@ export const getMessagesByUserId = async (req, res) => {
     }
 }
 
+// export const getMessagesByUserId = async (req, res) => {
+//   try {
+//     const myId = req.user._id;
+//     const { id: userToChatId } = req.params;
+
+//     const messages = await Message.find({
+//       $or: [
+//         { senderId: myId, receiverId: userToChatId },
+//         { senderId: userToChatId, receiverId: myId },
+//       ],
+//     });
+
+//     res.status(200).json(messages);
+//   } catch (error) {
+//     console.log("Error in getMessages controller: ", error.message);
+//     res.status(500).json({ error: "Internal server error" });
+//   }
+// };
+
+
 export const sendMessage = async (req, res) => {
     try {
-        const { text, image  } = req.body;
+        const { text, image } = req.body;
         const { id: receiverId } = req.params;
         const senderId = req.user._id;
 
-        if (!text && !image ) {
+        if (!text && !image) {
             return res.status(400).json({ message: "Message text or image    is required" })
         };
 

@@ -10,7 +10,8 @@ function ChatList() {
 
   useEffect(() => {
     getMyChatPartners();
-  }, [getMyChatPartners])
+  }, [getMyChatPartners]);
+
 
   if (isUsersLoading) return <UsersLoadingSkeleton />; // Skeleton is chat loading states
   if (chats.length === 0) return <NoChatsFound /> // 
@@ -23,12 +24,13 @@ function ChatList() {
         <div
           key={chat._id}
           className="bg-cyan-500/10 p-4 rounded-lg cursor-pointer hover:bg-cyan-500/20 transition-colors"
-          onClick={()=> setSelectedUser(chat)}
+          onClick={() => { setSelectedUser(chat); 
+           }}
         >
           <div className="flex items-center gap-3">
             {/* fix online status and make it work with socket  */}
             <div className={`avatar online`}>
-              <div className="size-12 rounderd-full">
+              <div className="size-12 rounded-full">
                 <img src={chat.profilePic || "/avatar.png"} alt={chat.fullName} />
               </div>
             </div>
