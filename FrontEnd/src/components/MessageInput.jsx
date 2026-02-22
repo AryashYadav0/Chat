@@ -1,8 +1,11 @@
 import React from 'react'
+import MessagesLoadingSkeleton from './MessagesLoadingSkeleton'
 
 function MessageInput() {
   return (
-    <div>MessageInput</div>
+    <div>MessageInput
+        <MessagesLoadingSkeleton/>
+    </div>
   )
 }
 
