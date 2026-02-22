@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import ChatHeader from "./ChatHeader";
 import NoChatHistoryPlaceholder from './NoChatHistoryPlaceholder';
 import MessageInput from './MessageInput';
+import MessagesLoadingSkeleton from './MessagesLoadingSkeleton';
 
 function ChatContainer() {
 
