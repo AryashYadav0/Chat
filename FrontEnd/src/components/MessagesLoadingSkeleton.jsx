@@ -2,7 +2,9 @@ import React from 'react'
 
 function MessagesLoadingSkeleton() {
   return (
-    <div>MessagesLoadingSkeleton</div>
+    <div className="">MessagesLoadingSkeleton
+        loading
+    </div>
   )
 }
 
