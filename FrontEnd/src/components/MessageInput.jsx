@@ -66,8 +66,13 @@ function MessageInput() {
           className="flex bg-slate-500 border border-slate-700/50 rounded-lg py-2 px-4"
           placeholder="Type your message..."
         />
+        <input type="file"
+          accept="image/*"
+          ref={fileInputRef}
+          onChange={handleImageChange}
+          className="hidden"
+        />
         
-
       </form>
     </div>
   )
