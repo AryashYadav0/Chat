@@ -72,6 +72,14 @@ function MessageInput() {
           onChange={handleImageChange}
           className="hidden"
         />
+        <button
+            type="button"
+            onClick={()=> fileInputRef.current?.click()}
+            className={`bg-slate-800/50 text-slate-400 hover:text-slate-200 rounded-lg px-4 translate-colors ${imagePreview ? "text-cyan-500": ""}`}
+        >
+          <ImageIcon className="w-5 h-5"/>
+        </button>
+
         
       </form>
     </div>
