@@ -66,28 +66,7 @@ function MessageInput() {
           className="flex bg-slate-500 border border-slate-700/50 rounded-lg py-2 px-4"
           placeholder="Type your message..."
         />
-        <input type="file"
-          accept="image/*"
-          ref={fileInputRef}
-          onChange={handleImageChange}
-          className="hidden"
-        />
-        <button
-            type="button"
-            onClick={()=> fileInputRef.current?.click()}
-            className={`bg-slate-800/50 text-slate-400 hover:text-slate-200 rounded-lg px-4 translate-colors ${imagePreview ? "text-cyan-500": ""}`}
-        >
-          <ImageIcon className="w-5 h-5"/>
-        </button>
-
-        {/* submit btn  */}
-        <button
-          type="submit"
-          disabled={!text.trim() && !imagePreview}
-          className="bg-gradient-to-r from-cyan-500 to-cyan-600 text-white rounded-lg px-4 py-4 font-medium hover:from-cyan-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          <SendIcon  className="w-5 h-5"/>
-        </button>
+        
 
       </form>
     </div>
