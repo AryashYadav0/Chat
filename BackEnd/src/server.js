@@ -18,7 +18,7 @@ const __dirname = path.resolve();
 
 const port = ENV.PORT || 3000
 
-app.use(express.json()) //req.body
+app.use(express.json({limit:"5mb"})) //req.body
 app.use(cors({origin:ENV.CLIENT_URL, credentials:true})) // allow frontend to access backend with cookies
 app.use(cookiesParser())
 
