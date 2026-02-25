@@ -78,10 +78,10 @@ export const useChatStore = create((set, get) => ({
             receiverId: selectedUser.id,
             text: messageData.text,
             image: messageData.image,
-            createAt: new Date().toISOString(),
+            createdAt: new Date().toISOString(),
             isOptimistic: true, // optimistic message (Optional)
         }
-        // immidetaly update the ui by adding the message 
+        // immediately update the ui by adding the message 
         set({ messages: [...messages, optimisticMessage] })
 
         try {
@@ -89,6 +89,8 @@ export const useChatStore = create((set, get) => ({
             set({ messages: messages.concat(res.data) })
             // console.log(messages)  
         } catch (error) {
+            // remove optimistic message on future  
+            set({messages: messages}); 
             toast.error(error.response?.data?.message || "something went wrong")
         }
     },
