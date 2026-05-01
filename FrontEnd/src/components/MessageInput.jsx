@@ -57,38 +57,40 @@ function MessageInput() {
 
       )}
       <form onSubmit={handleSendMessage} className="max-w-3xl mx-auto flex space-x-4">
-        <input type="text"
+        <input
+          type="text"
           value={text}
           onChange={(e) => {
             setText(e.target.value);
-            isSoundEnable && playRandomKeyStrokeSound();
+            isSoundEnabled && playRandomKeyStrokeSound();
           }}
-          className="flex bg-slate-500 border border-slate-700/50 rounded-lg py-2 px-4"
+          className="flex-1 bg-slate-800/50 border border-slate-700/50 rounded-lg py-2 px-4"
           placeholder="Type your message..."
         />
-        <input type="file"
+
+        <input
+          type="file"
           accept="image/*"
           ref={fileInputRef}
           onChange={handleImageChange}
           className="hidden"
         />
-        <button
-            type="button"
-            onClick={()=> fileInputRef.current?.click()}
-            className={`bg-slate-800/50 text-slate-400 hover:text-slate-200 rounded-lg px-4 translate-colors ${imagePreview ? "text-cyan-500": ""}`}
-        >
-          <ImageIcon className="w-5 h-5"/>
-        </button>
 
-        {/* submit btn  */}
+        <button
+          type="button"
+          onClick={() => fileInputRef.current?.click()}
+          className={`bg-slate-800/50 text-slate-400 hover:text-slate-200 rounded-lg px-4 transition-colors ${imagePreview ? "text-cyan-500" : ""
+            }`}
+        >
+          <ImageIcon className="w-5 h-5" />
+        </button>
         <button
           type="submit"
           disabled={!text.trim() && !imagePreview}
-          className="bg-gradient-to-r from-cyan-500 to-cyan-600 text-white rounded-lg px-4 py-4 font-medium hover:from-cyan-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+          className="bg-gradient-to-r from-cyan-500 to-cyan-600 text-white rounded-lg px-4 py-2 font-medium hover:from-cyan-600 hover:to-cyan-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          <SendIcon  className="w-5 h-5"/>
+          <SendIcon className="w-5 h-5" />
         </button>
-        
       </form>
     </div>
   )
